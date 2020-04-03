@@ -214,5 +214,32 @@ The [issue tracker](/issues) is the preferred channel for bug reports, features 
 For pull requests, editor preferences are available in the [editor config](.editorconfig) for easy use in common text editors. Read more and download plugins at <http://editorconfig.org>.
 
 
+#1 Please follow the instruction
 
+```
+$mvn clean package -DskipTests=true
+$docker build . -t petclinic:v2
 
+#Using postgres
+$docker run --name pg -e POSTGRES_PASSWORD=postgres  -p 5432:5432 -d postgres:9.6.0 
+$docker run -it --link pg --env-file petclinic.env -p 8080:8080 petclinic:v2
+
+#Or mysql
+$docker run -d --name mydb --env-file petclinic.env -p 3306:3306 mysql:5.7.8
+$docker run -it --link mydb --env-file petclinic.env -p 8080:8080 petclinic:v2
+```
+
+List of used parameters
+
+DATABASE_TYPE 
+ You can choose appropriate DB (mysql or postgresql)
+
+DATABASE_URL 
+ jdbc:mysql://hostname:3306/petclinicdata?useUnicode=true
+ jdbc:postgresql://hostname:5432/postgres
+
+DATABASE_USERNAME
+ This parameter is require 
+
+DATABASE_PASSWORD
+ This parameter is require 
